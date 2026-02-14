@@ -101,7 +101,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between py-8 px-4">
 
-    <!-- Header -->
+    <!-- Header Title -->
     <div class="text-center">
         <h3 class="tracking-[0.3em] text-[10px] md:text-xs font-bold opacity-60 uppercase">
             PARVASSIVE <span class="text-neon-blue">PLAYZ</span>
@@ -126,15 +126,15 @@
             <h1 class="text-2xl font-black tracking-tight text-neon-blue drop-shadow-[0_0_8px_rgba(0, 243, 255, 0.6)] uppercase">Playz</h1>
         </div>
 
-        <!-- Slogan -->
+        <!-- Slogan Section -->
         <div class="mt-4 mb-8">
             <p class="font-rajdhani text-gray-400 text-sm leading-snug">High-octane gameplay, epic fails,<br>and community vibes.</p>
             <p class="font-rajdhani text-neon-purple font-bold text-[10px] tracking-[0.2em] uppercase mt-2">Not a Gamer, But a Game Changer.</p>
         </div>
 
-        <!-- Buttons -->
+        <!-- Action Buttons -->
         <div class="w-full space-y-4">
-            <button id="auth-main-btn" onclick="openModal('auth-modal')" class="w-full py-3.5 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
+            <button onclick="openModal('signup-modal')" class="w-full py-3.5 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
                 JOIN SQUAD
             </button>
             
@@ -143,145 +143,154 @@
                     SUBSCRIBE NOW
                 </button>
             </a>
+            
+            <div class="pt-2">
+                <button onclick="openModal('login-modal')" class="text-gray-500 text-[10px] font-bold underline hover:text-white transition font-rajdhani uppercase tracking-widest">
+                    Already in the squad? Login
+                </button>
+            </div>
         </div>
     </main>
 
-    <div class="h-4"></div>
-
-    <!-- MAGIC LINK MODAL -->
-    <div id="auth-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
+    <!-- SIGN UP MODAL -->
+    <div id="signup-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
         <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative shadow-neon-glow text-center">
-            <button onclick="closeModal('auth-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
+            <button onclick="closeModal('signup-modal')" class="absolute top-3 right-4 text-gray-500 text-xl">&times;</button>
+            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase">CREATE ACCOUNT</h2>
             
-            <h2 class="text-lg font-bold mb-2 tracking-widest uppercase">Squad Access</h2>
-            <p class="font-rajdhani text-[11px] text-gray-500 mb-6">Enter your email for a professional secure login link. No passwords required.</p>
-            
-            <form id="auth-form" class="space-y-4 text-left">
+            <form id="signup-form" class="space-y-4 text-left">
                 <div>
                     <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Email Address</label>
-                    <input type="email" id="auth-email" placeholder="gamertag@gmail.com" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
+                    <input type="email" id="signup-email" placeholder="gamertag@gmail.com" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Choose Password</label>
+                    <input type="password" id="signup-password" placeholder="••••••••" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
                 </div>
 
-                <div id="auth-msg" class="hidden text-[10px] font-bold p-2 rounded text-center"></div>
+                <div id="signup-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
 
                 <button type="submit" class="w-full py-3 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 tracking-widest uppercase">
-                    <span id="btn-label">SEND MAGIC LINK</span>
-                    <div id="btn-loader" class="loader"></div>
+                    <span id="signup-btn-label">SIGN UP</span>
+                    <div id="signup-loader" class="loader"></div>
                 </button>
             </form>
+            <p class="mt-4 text-[10px] text-gray-500 font-rajdhani uppercase tracking-widest">
+                Member? <button onclick="switchModal('signup-modal', 'login-modal')" class="text-neon-blue font-bold underline">Login</button>
+            </p>
         </div>
     </div>
 
-    <!-- Firebase System -->
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
+        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative shadow-neon-glow text-center">
+            <button onclick="closeModal('login-modal')" class="absolute top-3 right-4 text-gray-500 text-xl">&times;</button>
+            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase">WELCOME BACK</h2>
+            
+            <form id="login-form" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Email</label>
+                    <input type="email" id="login-email" placeholder="gamertag@gmail.com" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
+                </div>
+
+                <div id="login-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
+
+                <button type="submit" class="w-full py-3 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 tracking-widest uppercase">
+                    <span id="login-btn-label">LOGIN</span>
+                    <div id="login-loader" class="loader"></div>
+                </button>
+            </form>
+            <p class="mt-4 text-[10px] text-gray-500 font-rajdhani uppercase tracking-widest">
+                New? <button onclick="switchModal('login-modal', 'signup-modal')" class="text-neon-blue font-bold underline">Join Squad</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Firebase Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getAuth, 
-            sendSignInLinkToEmail, 
-            isSignInWithEmailLink, 
-            signInWithEmailLink, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
             onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // CRITICAL: KEYS VERIFIED FROM SCREENSHOT 1000078869.jpg
+        // KEYS EXTRACTED FROM YOUR SCREENSHOT (parvassive-playz-bb435)
         const firebaseConfig = {
-            apiKey: "AIzaSyDeZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
-            authDomain: "parvassive-playz-6dfe4.firebaseapp.com",
-            projectId: "parvassive-playz-6dfe4",
-            storageBucket: "parvassive-playz-6dfe4.firebasestorage.app",
-            messagingSenderId: "796137786717",
-            appId: "1:796137786717:web:22e064e854fc97978becb4"
+            apiKey: "AIzaSyCzWkhYu0VndJuREUJQTbtt4kLP5rqC3Ms",
+            authDomain: "parvassive-playz-bb435.firebaseapp.com",
+            projectId: "parvassive-playz-bb435",
+            storageBucket: "parvassive-playz-bb435.firebasestorage.app",
+            messagingSenderId: "408666352798",
+            appId: "1:408666352798:web:28d96786816e6bf52b9f8f"
         };
 
-        let app, auth;
-        try {
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            console.log("Firebase App Initialized");
-        } catch (e) {
-            alert("Initialization Error: Check if your API Key is correct.");
-        }
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-        // --- HANDLE MAGIC LINK REDIRECT ---
-        window.addEventListener('load', async () => {
-            if (isSignInWithEmailLink(auth, window.location.href)) {
-                let email = window.localStorage.getItem('emailForSignIn');
-                if (!email) {
-                    email = window.prompt('Please confirm your email for secure login:');
-                }
-                if (email) {
-                    try {
-                        const result = await signInWithEmailLink(auth, email, window.location.href);
-                        window.localStorage.removeItem('emailForSignIn');
-                        window.location.href = 'dashboard.html';
-                    } catch (err) {
-                        console.error(err);
-                        alert("Authentication failed: " + err.message);
-                    }
-                }
-            }
-        });
-
+        // Auto-redirect if logged in
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const btn = document.getElementById('auth-main-btn');
-                btn.textContent = "GO TO DASHBOARD";
-                btn.onclick = () => window.location.href = 'dashboard.html';
+                window.location.href = 'dashboard.html';
             }
         });
 
+        // UI Modal Helpers
         window.openModal = (id) => document.getElementById(id).classList.add('active');
         window.closeModal = (id) => {
             document.getElementById(id).classList.remove('active');
-            document.getElementById('auth-msg').classList.add('hidden');
+            document.querySelectorAll('[id$="-msg"]').forEach(el => el.classList.add('hidden'));
         };
+        window.switchModal = (c, o) => { closeModal(c); setTimeout(() => openModal(o), 300); };
 
-        // --- SEND MAGIC LINK ---
-        document.getElementById('auth-form').onsubmit = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('auth-email').value;
-            const msgBox = document.getElementById('auth-msg');
-            const label = document.getElementById('btn-label');
-            const loader = document.getElementById('btn-loader');
+        // Core Auth Logic
+        async function handleAuth(type, email, password) {
+            const msgBox = document.getElementById(`${type}-msg`);
+            const label = document.getElementById(`${type}-btn-label`);
+            const loader = document.getElementById(`${type}-loader`);
 
             msgBox.classList.add('hidden');
             label.style.display = 'none';
             loader.style.display = 'block';
 
-            // IMPORTANT: GitHub URL with the trailing dash for your specific repository
-            const actionCodeSettings = {
-                url: "https://parvassiveplayzwebsite.github.io/Parvassive-Playz-/",
-                handleCodeInApp: true,
-            };
-
             try {
-                await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-                window.localStorage.setItem('emailForSignIn', email);
-                
-                msgBox.textContent = "CHECK YOUR INBOX! Link sent.";
-                msgBox.className = "text-neon-blue bg-neon-blue/10 border border-neon-blue/20 p-2 rounded text-[10px] font-bold mt-2";
-                msgBox.classList.remove('hidden');
-                
-                label.textContent = "RESEND LINK";
-                label.style.display = 'block';
-                loader.style.display = 'none';
-            } catch (error) {
-                console.error("Full Error Object:", error);
-                
-                // Detailed alert for debugging
-                let friendlyError = error.code;
-                if (error.code === 'auth/api-key-not-valid') {
-                    friendlyError = "API Key Invalid. Please check characters or enable 'Secure Token Service' in Google Cloud Library.";
+                if (type === 'signup') {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
                 }
+            } catch (err) {
+                console.error("Auth Error:", err.code);
+                let friendly = "Error: " + err.message;
+                
+                if (err.code === 'auth/email-already-in-use') friendly = "That email is already in the Squad.";
+                if (err.code === 'auth/wrong-password') friendly = "Incorrect password, soldier.";
+                if (err.code === 'auth/user-not-found') friendly = "No squad member found with this email.";
+                if (err.code === 'auth/weak-password') friendly = "Password is too weak (min 6 characters).";
+                if (err.code === 'auth/operation-not-allowed') friendly = "Email/Password is NOT enabled in Firebase Console!";
+                if (err.code === 'auth/api-key-not-valid') friendly = "API Key Error. Please ensure domain is authorized.";
 
-                msgBox.textContent = "ERROR: " + friendlyError;
+                msgBox.textContent = friendly;
                 msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2";
                 msgBox.classList.remove('hidden');
                 label.style.display = 'block';
                 loader.style.display = 'none';
-                
-                alert("FIREBASE ERROR [" + error.code + "]: " + error.message);
             }
+        }
+
+        document.getElementById('signup-form').onsubmit = (e) => {
+            e.preventDefault();
+            handleAuth('signup', document.getElementById('signup-email').value, document.getElementById('signup-password').value);
+        };
+
+        document.getElementById('login-form').onsubmit = (e) => {
+            e.preventDefault();
+            handleAuth('login', document.getElementById('login-email').value, document.getElementById('login-password').value);
         };
     </script>
 </body>
