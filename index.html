@@ -39,7 +39,7 @@
             padding: 0;
         }
 
-        /* Optimized Floating Animations */
+        /* Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -52,13 +52,6 @@
             transition: all 0.3s ease;
         }
         .btn-gradient:active { transform: scale(0.95); }
-
-        .btn-outline {
-            border: 2px solid #00f3ff;
-            background: transparent;
-            color: #00f3ff;
-            transition: all 0.3s ease;
-        }
 
         .modal {
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -101,52 +94,41 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between py-8 px-4">
 
-    <!-- Header Title -->
+    <!-- Header -->
     <div class="text-center">
         <h3 class="tracking-[0.3em] text-[10px] md:text-xs font-bold opacity-60 uppercase">
             PARVASSIVE <span class="text-neon-blue">PLAYZ</span>
         </h3>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="flex flex-col items-center justify-center w-full max-w-xs text-center">
         
-        <!-- Animated Logo -->
         <div class="mb-6 float-logo">
             <div class="logo-ring">
-                <div class="rounded-full bg-black overflow-hidden h-32 w-32 md:h-36 md:w-36 flex items-center justify-center">
+                <div class="rounded-full bg-black overflow-hidden h-32 w-32 flex items-center justify-center">
                     <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/000000/00f3ff?text=LOGO'">
                 </div>
             </div>
         </div>
 
-        <!-- Animated Text -->
         <div class="float-text">
             <h1 class="text-2xl font-black tracking-tight mb-0 uppercase">Parvassive</h1>
             <h1 class="text-2xl font-black tracking-tight text-neon-blue drop-shadow-[0_0_8px_rgba(0, 243, 255, 0.6)] uppercase">Playz</h1>
         </div>
 
-        <!-- Slogan Section -->
         <div class="mt-4 mb-8">
-            <p class="font-rajdhani text-gray-400 text-sm leading-snug">High-octane gameplay, epic fails,<br>and community vibes.</p>
+            <p class="font-rajdhani text-gray-400 text-sm leading-snug font-semibold">High-octane gameplay, epic fails,<br>and community vibes.</p>
             <p class="font-rajdhani text-neon-purple font-bold text-[10px] tracking-[0.2em] uppercase mt-2">Not a Gamer, But a Game Changer.</p>
         </div>
 
-        <!-- Action Buttons -->
         <div class="w-full space-y-4">
-            <button onclick="openModal('signup-modal')" class="w-full py-3.5 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
+            <button onclick="openModal('signup-modal')" class="w-full py-4 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
                 JOIN SQUAD
             </button>
-            
-            <a href="https://youtube.com/@parvassiveplayz26?si=XCHfSm_ch-34Oxid" target="_blank" class="block">
-                <button class="w-full py-3.5 text-neon-blue font-black text-sm tracking-widest btn-outline rounded-md uppercase">
-                    SUBSCRIBE NOW
-                </button>
-            </a>
-            
             <div class="pt-2">
-                <button onclick="openModal('login-modal')" class="text-gray-500 text-[10px] font-bold underline hover:text-white transition font-rajdhani uppercase tracking-widest">
-                    Already in the squad? Login
+                <button onclick="openModal('login-modal')" class="text-gray-500 text-[10px] font-bold underline hover:text-white transition uppercase tracking-[0.2em]">
+                    Already a Member? Login
                 </button>
             </div>
         </div>
@@ -154,73 +136,43 @@
 
     <!-- SIGN UP MODAL -->
     <div id="signup-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
-        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative shadow-neon-glow text-center">
+        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative text-center">
             <button onclick="closeModal('signup-modal')" class="absolute top-3 right-4 text-gray-500 text-xl">&times;</button>
-            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase">CREATE ACCOUNT</h2>
-            
+            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white">Create Account</h2>
             <form id="signup-form" class="space-y-4 text-left">
-                <div>
-                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Email Address</label>
-                    <input type="email" id="signup-email" placeholder="gamertag@gmail.com" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
-                </div>
-                <div>
-                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Choose Password</label>
-                    <input type="password" id="signup-password" placeholder="••••••••" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
-                </div>
-
+                <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
+                <input type="password" id="signup-password" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
                 <div id="signup-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
-
-                <button type="submit" class="w-full py-3 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 tracking-widest uppercase">
+                <button type="submit" class="w-full py-3.5 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 uppercase tracking-widest">
                     <span id="signup-btn-label">SIGN UP</span>
                     <div id="signup-loader" class="loader"></div>
                 </button>
             </form>
-            <p class="mt-4 text-[10px] text-gray-500 font-rajdhani uppercase tracking-widest">
-                Member? <button onclick="switchModal('signup-modal', 'login-modal')" class="text-neon-blue font-bold underline">Login</button>
-            </p>
         </div>
     </div>
 
     <!-- LOGIN MODAL -->
     <div id="login-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
-        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative shadow-neon-glow text-center">
+        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative text-center">
             <button onclick="closeModal('login-modal')" class="absolute top-3 right-4 text-gray-500 text-xl">&times;</button>
-            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase">WELCOME BACK</h2>
-            
+            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white">Welcome Back</h2>
             <form id="login-form" class="space-y-4 text-left">
-                <div>
-                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Email</label>
-                    <input type="email" id="login-email" placeholder="gamertag@gmail.com" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
-                </div>
-                <div>
-                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Password</label>
-                    <input type="password" id="login-password" placeholder="••••••••" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
-                </div>
-
+                <input type="email" id="login-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
+                <input type="password" id="login-password" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
                 <div id="login-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
-
-                <button type="submit" class="w-full py-3 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 tracking-widest uppercase">
+                <button type="submit" class="w-full py-3.5 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 uppercase tracking-widest">
                     <span id="login-btn-label">LOGIN</span>
                     <div id="login-loader" class="loader"></div>
                 </button>
             </form>
-            <p class="mt-4 text-[10px] text-gray-500 font-rajdhani uppercase tracking-widest">
-                New? <button onclick="switchModal('login-modal', 'signup-modal')" class="text-neon-blue font-bold underline">Join Squad</button>
-            </p>
         </div>
     </div>
 
-    <!-- Firebase Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { 
-            getAuth, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword, 
-            onAuthStateChanged 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // KEYS EXTRACTED FROM YOUR SCREENSHOT (parvassive-playz-bb435)
+        // VERIFIED CONFIG FROM PROJECT bb435
         const firebaseConfig = {
             apiKey: "AIzaSyCzWkhYu0VndJuREUJQTbtt4kLP5rqC3Ms",
             authDomain: "parvassive-playz-bb435.firebaseapp.com",
@@ -233,47 +185,36 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Auto-redirect if logged in
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                window.location.href = 'dashboard.html';
-            }
+            if (user) window.location.href = 'dashboard.html';
         });
 
-        // UI Modal Helpers
         window.openModal = (id) => document.getElementById(id).classList.add('active');
         window.closeModal = (id) => {
             document.getElementById(id).classList.remove('active');
             document.querySelectorAll('[id$="-msg"]').forEach(el => el.classList.add('hidden'));
         };
-        window.switchModal = (c, o) => { closeModal(c); setTimeout(() => openModal(o), 300); };
 
-        // Core Auth Logic
         async function handleAuth(type, email, password) {
             const msgBox = document.getElementById(`${type}-msg`);
             const label = document.getElementById(`${type}-btn-label`);
             const loader = document.getElementById(`${type}-loader`);
-
             msgBox.classList.add('hidden');
             label.style.display = 'none';
             loader.style.display = 'block';
 
             try {
-                if (type === 'signup') {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                } else {
-                    await signInWithEmailAndPassword(auth, email, password);
-                }
-            } catch (err) {
-                console.error("Auth Error:", err.code);
-                let friendly = "Error: " + err.message;
+                if (type === 'signup') await createUserWithEmailAndPassword(auth, email, password);
+                else await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                console.error(error);
+                let friendly = "Error: " + error.code;
                 
-                if (err.code === 'auth/email-already-in-use') friendly = "That email is already in the Squad.";
-                if (err.code === 'auth/wrong-password') friendly = "Incorrect password, soldier.";
-                if (err.code === 'auth/user-not-found') friendly = "No squad member found with this email.";
-                if (err.code === 'auth/weak-password') friendly = "Password is too weak (min 6 characters).";
-                if (err.code === 'auth/operation-not-allowed') friendly = "Email/Password is NOT enabled in Firebase Console!";
-                if (err.code === 'auth/api-key-not-valid') friendly = "API Key Error. Please ensure domain is authorized.";
+                // Nuclear Debugger for Frustration
+                if (error.code === 'auth/api-key-not-valid') {
+                    const keyUsed = firebaseConfig.apiKey;
+                    alert(`DEBUG: API KEY ERROR.\nKey in Code: ${keyUsed}\nCheck if this matches the console EXACTLY.\nAlso: Refresh GitHub Pages Cache!`);
+                }
 
                 msgBox.textContent = friendly;
                 msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2";
@@ -283,15 +224,8 @@
             }
         }
 
-        document.getElementById('signup-form').onsubmit = (e) => {
-            e.preventDefault();
-            handleAuth('signup', document.getElementById('signup-email').value, document.getElementById('signup-password').value);
-        };
-
-        document.getElementById('login-form').onsubmit = (e) => {
-            e.preventDefault();
-            handleAuth('login', document.getElementById('login-email').value, document.getElementById('login-password').value);
-        };
+        document.getElementById('signup-form').onsubmit = (e) => { e.preventDefault(); handleAuth('signup', document.getElementById('signup-email').value, document.getElementById('signup-password').value); };
+        document.getElementById('login-form').onsubmit = (e) => { e.preventDefault(); handleAuth('login', document.getElementById('login-email').value, document.getElementById('login-password').value); };
     </script>
 </body>
 </html>
