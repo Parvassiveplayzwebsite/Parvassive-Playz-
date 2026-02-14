@@ -39,7 +39,7 @@
             padding: 0;
         }
 
-        /* Floating Animations */
+        /* Optimized Floating Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -111,6 +111,7 @@
     <!-- Main Content -->
     <main class="flex flex-col items-center justify-center w-full max-w-xs text-center">
         
+        <!-- Animated Logo -->
         <div class="mb-6 float-logo">
             <div class="logo-ring">
                 <div class="rounded-full bg-black overflow-hidden h-32 w-32 md:h-36 md:w-36 flex items-center justify-center">
@@ -119,16 +120,19 @@
             </div>
         </div>
 
+        <!-- Animated Text -->
         <div class="float-text">
             <h1 class="text-2xl font-black tracking-tight mb-0 uppercase">Parvassive</h1>
             <h1 class="text-2xl font-black tracking-tight text-neon-blue drop-shadow-[0_0_8px_rgba(0, 243, 255, 0.6)] uppercase">Playz</h1>
         </div>
 
+        <!-- Slogan -->
         <div class="mt-4 mb-8">
             <p class="font-rajdhani text-gray-400 text-sm leading-snug">High-octane gameplay, epic fails,<br>and community vibes.</p>
             <p class="font-rajdhani text-neon-purple font-bold text-[10px] tracking-[0.2em] uppercase mt-2">Not a Gamer, But a Game Changer.</p>
         </div>
 
+        <!-- Buttons -->
         <div class="w-full space-y-4">
             <button id="auth-main-btn" onclick="openModal('auth-modal')" class="w-full py-3.5 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
                 JOIN SQUAD
@@ -179,7 +183,7 @@
             onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // CRITICAL CHARACTER-BY-CHARACTER CONFIG FROM SCREENSHOT 1000078869.jpg
+        // CRITICAL: KEYS VERIFIED FROM SCREENSHOT 1000078869.jpg
         const firebaseConfig = {
             apiKey: "AIzaSyDeZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
             authDomain: "parvassive-playz-6dfe4.firebaseapp.com",
@@ -189,19 +193,25 @@
             appId: "1:796137786717:web:22e064e854fc97978becb4"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+        let app, auth;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            console.log("Firebase App Initialized");
+        } catch (e) {
+            alert("Initialization Error: Check if your API Key is correct.");
+        }
 
-        // --- AUTH REDIRECT HANDLER ---
+        // --- HANDLE MAGIC LINK REDIRECT ---
         window.addEventListener('load', async () => {
             if (isSignInWithEmailLink(auth, window.location.href)) {
                 let email = window.localStorage.getItem('emailForSignIn');
                 if (!email) {
-                    email = window.prompt('Confirm your email for secure login:');
+                    email = window.prompt('Please confirm your email for secure login:');
                 }
                 if (email) {
                     try {
-                        await signInWithEmailLink(auth, email, window.location.href);
+                        const result = await signInWithEmailLink(auth, email, window.location.href);
                         window.localStorage.removeItem('emailForSignIn');
                         window.location.href = 'dashboard.html';
                     } catch (err) {
@@ -238,14 +248,14 @@
             label.style.display = 'none';
             loader.style.display = 'block';
 
-            // Detect current URL properly for GitHub Pages
-            const settings = {
-                url: window.location.origin + window.location.pathname, 
+            // IMPORTANT: GitHub URL with the trailing dash for your specific repository
+            const actionCodeSettings = {
+                url: "https://parvassiveplayzwebsite.github.io/Parvassive-Playz-/",
                 handleCodeInApp: true,
             };
 
             try {
-                await sendSignInLinkToEmail(auth, email, settings);
+                await sendSignInLinkToEmail(auth, email, actionCodeSettings);
                 window.localStorage.setItem('emailForSignIn', email);
                 
                 msgBox.textContent = "CHECK YOUR INBOX! Link sent.";
@@ -256,16 +266,24 @@
                 label.style.display = 'block';
                 loader.style.display = 'none';
             } catch (error) {
-                console.error("Firebase Details:", error);
-                msgBox.textContent = "ERROR: " + error.code;
+                console.error("Full Error Object:", error);
+                
+                // Detailed alert for debugging
+                let friendlyError = error.code;
+                if (error.code === 'auth/api-key-not-valid') {
+                    friendlyError = "API Key Invalid. Please check characters or enable 'Secure Token Service' in Google Cloud Library.";
+                }
+
+                msgBox.textContent = "ERROR: " + friendlyError;
                 msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2";
                 msgBox.classList.remove('hidden');
                 label.style.display = 'block';
                 loader.style.display = 'none';
+                
+                alert("FIREBASE ERROR [" + error.code + "]: " + error.message);
             }
         };
     </script>
 </body>
 </html>
-
 
