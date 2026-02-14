@@ -39,7 +39,7 @@
             padding: 0;
         }
 
-        /* Optimized Floating Animations */
+        /* Floating Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -150,7 +150,7 @@
             <button onclick="closeModal('auth-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
             
             <h2 class="text-lg font-bold mb-2 tracking-widest uppercase">Squad Access</h2>
-            <p class="font-rajdhani text-[11px] text-gray-500 mb-6">Enter your email for the secure login link. No passwords required.</p>
+            <p class="font-rajdhani text-[11px] text-gray-500 mb-6">Enter your email for a professional secure login link. No passwords required.</p>
             
             <form id="auth-form" class="space-y-4 text-left">
                 <div>
@@ -179,9 +179,9 @@
             onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Configuration from your screenshot
+        // CRITICAL CHARACTER-BY-CHARACTER CONFIG FROM SCREENSHOT 1000078869.jpg
         const firebaseConfig = {
-            apiKey: "AIzaSyDaZwZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
+            apiKey: "AIzaSyDeZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
             authDomain: "parvassive-playz-6dfe4.firebaseapp.com",
             projectId: "parvassive-playz-6dfe4",
             storageBucket: "parvassive-playz-6dfe4.firebasestorage.app",
@@ -192,12 +192,12 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // HANDLE MAGIC LINK REDIRECT
+        // --- AUTH REDIRECT HANDLER ---
         window.addEventListener('load', async () => {
             if (isSignInWithEmailLink(auth, window.location.href)) {
                 let email = window.localStorage.getItem('emailForSignIn');
                 if (!email) {
-                    email = window.prompt('Please confirm your email for secure login:');
+                    email = window.prompt('Confirm your email for secure login:');
                 }
                 if (email) {
                     try {
@@ -226,7 +226,7 @@
             document.getElementById('auth-msg').classList.add('hidden');
         };
 
-        // SEND EMAIL LOGIC
+        // --- SEND MAGIC LINK ---
         document.getElementById('auth-form').onsubmit = async (e) => {
             e.preventDefault();
             const email = document.getElementById('auth-email').value;
@@ -238,13 +238,14 @@
             label.style.display = 'none';
             loader.style.display = 'block';
 
-            const actionCodeSettings = {
+            // Detect current URL properly for GitHub Pages
+            const settings = {
                 url: window.location.origin + window.location.pathname, 
                 handleCodeInApp: true,
             };
 
             try {
-                await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+                await sendSignInLinkToEmail(auth, email, settings);
                 window.localStorage.setItem('emailForSignIn', email);
                 
                 msgBox.textContent = "CHECK YOUR INBOX! Link sent.";
@@ -255,7 +256,7 @@
                 label.style.display = 'block';
                 loader.style.display = 'none';
             } catch (error) {
-                console.error("Firebase Error:", error);
+                console.error("Firebase Details:", error);
                 msgBox.textContent = "ERROR: " + error.code;
                 msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2";
                 msgBox.classList.remove('hidden');
@@ -266,4 +267,5 @@
     </script>
 </body>
 </html>
+
 
