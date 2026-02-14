@@ -39,7 +39,7 @@
             padding: 0;
         }
 
-        /* Animations */
+        /* Floating Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -51,7 +51,6 @@
             background: linear-gradient(90deg, #bc13fe 0%, #00f3ff 100%);
             transition: all 0.3s ease;
         }
-        .btn-gradient:active { transform: scale(0.95); }
 
         .modal {
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -118,7 +117,7 @@
         </div>
 
         <div class="mt-4 mb-8">
-            <p class="font-rajdhani text-gray-400 text-sm leading-snug font-semibold">High-octane gameplay, epic fails,<br>and community vibes.</p>
+            <p class="font-rajdhani text-gray-400 text-sm leading-snug">High-octane gameplay, epic fails,<br>and community vibes.</p>
             <p class="font-rajdhani text-neon-purple font-bold text-[10px] tracking-[0.2em] uppercase mt-2">Not a Gamer, But a Game Changer.</p>
         </div>
 
@@ -127,8 +126,8 @@
                 JOIN SQUAD
             </button>
             <div class="pt-2">
-                <button onclick="openModal('login-modal')" class="text-gray-500 text-[10px] font-bold underline hover:text-white transition uppercase tracking-[0.2em]">
-                    Already a Member? Login
+                <button onclick="openModal('login-modal')" class="text-gray-500 text-[10px] font-bold underline hover:text-white transition uppercase tracking-[0.1em]">
+                    Already Member? Login
                 </button>
             </div>
         </div>
@@ -137,15 +136,16 @@
     <!-- SIGN UP MODAL -->
     <div id="signup-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
         <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative text-center">
-            <button onclick="closeModal('signup-modal')" class="absolute top-3 right-4 text-gray-500 text-xl">&times;</button>
-            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white">Create Account</h2>
+            <button onclick="closeModal('signup-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
+            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white font-orbitron">Create Account</h2>
+            
             <form id="signup-form" class="space-y-4 text-left">
-                <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
-                <input type="password" id="signup-password" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
-                <div id="signup-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
+                <input type="email" id="su-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
+                <input type="password" id="su-pass" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
+                <div id="su-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
                 <button type="submit" class="w-full py-3.5 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 uppercase tracking-widest">
-                    <span id="signup-btn-label">SIGN UP</span>
-                    <div id="signup-loader" class="loader"></div>
+                    <span id="su-btn-label">SIGN UP</span>
+                    <div id="su-loader" class="loader"></div>
                 </button>
             </form>
         </div>
@@ -154,25 +154,27 @@
     <!-- LOGIN MODAL -->
     <div id="login-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
         <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative text-center">
-            <button onclick="closeModal('login-modal')" class="absolute top-3 right-4 text-gray-500 text-xl">&times;</button>
-            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white">Welcome Back</h2>
+            <button onclick="closeModal('login-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
+            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white font-orbitron">Welcome Back</h2>
+            
             <form id="login-form" class="space-y-4 text-left">
-                <input type="email" id="login-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
-                <input type="password" id="login-password" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
-                <div id="login-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
+                <input type="email" id="li-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
+                <input type="password" id="li-pass" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
+                <div id="li-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
                 <button type="submit" class="w-full py-3.5 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 uppercase tracking-widest">
-                    <span id="login-btn-label">LOGIN</span>
-                    <div id="login-loader" class="loader"></div>
+                    <span id="li-btn-label">LOGIN</span>
+                    <div id="li-loader" class="loader"></div>
                 </button>
             </form>
         </div>
     </div>
 
+    <!-- Firebase System -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // VERIFIED CONFIG FROM PROJECT bb435
+        // KEYS FROM SCREENSHOT AIzaSyCzWkhYu0VndJuREUJQTbtt4kLP5rqC3Ms
         const firebaseConfig = {
             apiKey: "AIzaSyCzWkhYu0VndJuREUJQTbtt4kLP5rqC3Ms",
             authDomain: "parvassive-playz-bb435.firebaseapp.com",
@@ -186,7 +188,7 @@
         const auth = getAuth(app);
 
         onAuthStateChanged(auth, (user) => {
-            if (user) window.location.href = 'dashboard.html';
+            if (user) { window.location.href = 'dashboard.html'; }
         });
 
         window.openModal = (id) => document.getElementById(id).classList.add('active');
@@ -196,9 +198,10 @@
         };
 
         async function handleAuth(type, email, password) {
-            const msgBox = document.getElementById(`${type}-msg`);
-            const label = document.getElementById(`${type}-btn-label`);
-            const loader = document.getElementById(`${type}-loader`);
+            const msgBox = document.getElementById(type === 'signup' ? 'su-msg' : 'li-msg');
+            const label = document.getElementById(type === 'signup' ? 'su-btn-label' : 'li-btn-label');
+            const loader = document.getElementById(type === 'signup' ? 'su-loader' : 'li-loader');
+            
             msgBox.classList.add('hidden');
             label.style.display = 'none';
             loader.style.display = 'block';
@@ -207,25 +210,26 @@
                 if (type === 'signup') await createUserWithEmailAndPassword(auth, email, password);
                 else await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
-                console.error(error);
-                let friendly = "Error: " + error.code;
-                
-                // Nuclear Debugger for Frustration
-                if (error.code === 'auth/api-key-not-valid') {
-                    const keyUsed = firebaseConfig.apiKey;
-                    alert(`DEBUG: API KEY ERROR.\nKey in Code: ${keyUsed}\nCheck if this matches the console EXACTLY.\nAlso: Refresh GitHub Pages Cache!`);
-                }
-
-                msgBox.textContent = friendly;
-                msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2";
-                msgBox.classList.remove('hidden');
+                console.error("DEBUG:", error.code, error.message);
+                msgBox.textContent = "Error: " + error.code.replace('auth/', '');
+                msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2 block";
                 label.style.display = 'block';
                 loader.style.display = 'none';
+                
+                if (error.code === 'auth/api-key-not-valid') {
+                    alert("STILL INVALID: You MUST enable the 'Secure Token Service API' in the Google Cloud Library for project bb435.");
+                }
             }
         }
 
-        document.getElementById('signup-form').onsubmit = (e) => { e.preventDefault(); handleAuth('signup', document.getElementById('signup-email').value, document.getElementById('signup-password').value); };
-        document.getElementById('login-form').onsubmit = (e) => { e.preventDefault(); handleAuth('login', document.getElementById('login-email').value, document.getElementById('login-password').value); };
+        document.getElementById('signup-form').onsubmit = (e) => { 
+            e.preventDefault(); 
+            handleAuth('signup', document.getElementById('su-email').value, document.getElementById('su-pass').value); 
+        };
+        document.getElementById('login-form').onsubmit = (e) => { 
+            e.preventDefault(); 
+            handleAuth('login', document.getElementById('li-email').value, document.getElementById('li-pass').value); 
+        };
     </script>
 </body>
 </html>
