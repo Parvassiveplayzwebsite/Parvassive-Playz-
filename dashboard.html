@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parvassive Dashboard - Access Granted</title>
+    <style>
+        body { background: #050505; color: #00f3ff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        .card { border: 2px solid #00f3ff; padding: 30px; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); max-width: 300px; }
+        button { background: linear-gradient(90deg, #bc13fe, #00f3ff); border: none; padding: 12px 20px; color: white; font-weight: bold; cursor: pointer; margin-top: 20px; border-radius: 8px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>SQUAD ACCESS GRANTED!</h1>
+        <p id="user-display" style="color: #bc13fe; font-weight: bold;">Verifying...</p>
+        <button onclick="logout()">LOGOUT</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaZwZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
+            authDomain: "parvassive-playz-6dfe4.firebaseapp.com",
+            projectId: "parvassive-playz-6dfe4",
+            storageBucket: "parvassive-playz-6dfe4.firebasestorage.app",
+            messagingSenderId: "796137786717",
+            appId: "1:796137786717:web:22e064e854fc97978becb4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('user-display').textContent = user.email;
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        window.logout = () => {
+            signOut(auth).then(() => {
+                window.location.href = 'index.html';
+            });
+        };
+    </script>
+</body>
+</html>
+

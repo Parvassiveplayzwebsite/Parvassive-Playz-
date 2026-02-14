@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parvassive Playz - Join the Squad</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'orbitron': ['"Orbitron"', 'sans-serif'],
+                        'rajdhani': ['"Rajdhani"', 'sans-serif'],
+                    },
+                    colors: {
+                        'neon-blue': '#00f3ff',
+                        'neon-purple': '#bc13fe',
+                        'dark-bg': '#050505',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            font-family: 'Orbitron', sans-serif;
+            overflow-x: hidden;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Optimized Floating Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-logo { animation: float 4s ease-in-out infinite; }
+        .float-text { animation: float 5s ease-in-out infinite; }
+
+        .btn-gradient {
+            background: linear-gradient(90deg, #bc13fe 0%, #00f3ff 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:active { transform: scale(0.95); }
+
+        .btn-outline {
+            border: 2px solid #00f3ff;
+            background: transparent;
+            color: #00f3ff;
+            transition: all 0.3s ease;
+        }
+
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .input-field {
+            background-color: #f0f2f5;
+            color: #1a1a1a;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+        }
+
+        .logo-ring {
+            position: relative;
+            padding: 3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f3ff, #bc13fe);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
+        }
+
+        .loader {
+            border: 3px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            border-top: 3px solid #00f3ff;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between py-8 px-4">
+
+    <!-- Header -->
+    <div class="text-center">
+        <h3 class="tracking-[0.3em] text-[10px] md:text-xs font-bold opacity-60 uppercase">
+            PARVASSIVE <span class="text-neon-blue">PLAYZ</span>
+        </h3>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex flex-col items-center justify-center w-full max-w-xs text-center">
+        
+        <div class="mb-6 float-logo">
+            <div class="logo-ring">
+                <div class="rounded-full bg-black overflow-hidden h-32 w-32 md:h-36 md:w-36 flex items-center justify-center">
+                    <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/000000/00f3ff?text=LOGO'">
+                </div>
+            </div>
+        </div>
+
+        <div class="float-text">
+            <h1 class="text-2xl font-black tracking-tight mb-0 uppercase">Parvassive</h1>
+            <h1 class="text-2xl font-black tracking-tight text-neon-blue drop-shadow-[0_0_8px_rgba(0, 243, 255, 0.6)] uppercase">Playz</h1>
+        </div>
+
+        <div class="mt-4 mb-8">
+            <p class="font-rajdhani text-gray-400 text-sm leading-snug">High-octane gameplay, epic fails,<br>and community vibes.</p>
+            <p class="font-rajdhani text-neon-purple font-bold text-[10px] tracking-[0.2em] uppercase mt-2">Not a Gamer, But a Game Changer.</p>
+        </div>
+
+        <div class="w-full space-y-4">
+            <button id="auth-main-btn" onclick="openModal('auth-modal')" class="w-full py-3.5 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
+                JOIN SQUAD
+            </button>
+            
+            <a href="https://youtube.com/@parvassiveplayz26?si=XCHfSm_ch-34Oxid" target="_blank" class="block">
+                <button class="w-full py-3.5 text-neon-blue font-black text-sm tracking-widest btn-outline rounded-md uppercase">
+                    SUBSCRIBE NOW
+                </button>
+            </a>
+        </div>
+    </main>
+
+    <div class="h-4"></div>
+
+    <!-- MAGIC LINK MODAL -->
+    <div id="auth-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
+        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative shadow-neon-glow text-center">
+            <button onclick="closeModal('auth-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
+            
+            <h2 class="text-lg font-bold mb-2 tracking-widest uppercase">Squad Access</h2>
+            <p class="font-rajdhani text-[11px] text-gray-500 mb-6">Enter your email for the secure login link. No passwords required.</p>
+            
+            <form id="auth-form" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-gray-600 text-[9px] font-bold mb-1 uppercase tracking-tighter">Email Address</label>
+                    <input type="email" id="auth-email" placeholder="gamertag@gmail.com" class="w-full p-2.5 rounded input-field outline-none focus:ring-1 focus:ring-neon-purple transition-all" required>
+                </div>
+
+                <div id="auth-msg" class="hidden text-[10px] font-bold p-2 rounded text-center"></div>
+
+                <button type="submit" class="w-full py-3 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 tracking-widest uppercase">
+                    <span id="btn-label">SEND MAGIC LINK</span>
+                    <div id="btn-loader" class="loader"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase System -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            sendSignInLinkToEmail, 
+            isSignInWithEmailLink, 
+            signInWithEmailLink, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Configuration from your screenshot
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaZwZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
+            authDomain: "parvassive-playz-6dfe4.firebaseapp.com",
+            projectId: "parvassive-playz-6dfe4",
+            storageBucket: "parvassive-playz-6dfe4.firebasestorage.app",
+            messagingSenderId: "796137786717",
+            appId: "1:796137786717:web:22e064e854fc97978becb4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // HANDLE MAGIC LINK REDIRECT
+        window.addEventListener('load', async () => {
+            if (isSignInWithEmailLink(auth, window.location.href)) {
+                let email = window.localStorage.getItem('emailForSignIn');
+                if (!email) {
+                    email = window.prompt('Please confirm your email for secure login:');
+                }
+                if (email) {
+                    try {
+                        await signInWithEmailLink(auth, email, window.location.href);
+                        window.localStorage.removeItem('emailForSignIn');
+                        window.location.href = 'dashboard.html';
+                    } catch (err) {
+                        console.error(err);
+                        alert("Authentication failed: " + err.message);
+                    }
+                }
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const btn = document.getElementById('auth-main-btn');
+                btn.textContent = "GO TO DASHBOARD";
+                btn.onclick = () => window.location.href = 'dashboard.html';
+            }
+        });
+
+        window.openModal = (id) => document.getElementById(id).classList.add('active');
+        window.closeModal = (id) => {
+            document.getElementById(id).classList.remove('active');
+            document.getElementById('auth-msg').classList.add('hidden');
+        };
+
+        // SEND EMAIL LOGIC
+        document.getElementById('auth-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const msgBox = document.getElementById('auth-msg');
+            const label = document.getElementById('btn-label');
+            const loader = document.getElementById('btn-loader');
+
+            msgBox.classList.add('hidden');
+            label.style.display = 'none';
+            loader.style.display = 'block';
+
+            const actionCodeSettings = {
+                url: window.location.origin + window.location.pathname, 
+                handleCodeInApp: true,
+            };
+
+            try {
+                await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+                window.localStorage.setItem('emailForSignIn', email);
+                
+                msgBox.textContent = "CHECK YOUR INBOX! Link sent.";
+                msgBox.className = "text-neon-blue bg-neon-blue/10 border border-neon-blue/20 p-2 rounded text-[10px] font-bold mt-2";
+                msgBox.classList.remove('hidden');
+                
+                label.textContent = "RESEND LINK";
+                label.style.display = 'block';
+                loader.style.display = 'none';
+            } catch (error) {
+                console.error("Firebase Error:", error);
+                msgBox.textContent = "ERROR: " + error.code;
+                msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2";
+                msgBox.classList.remove('hidden');
+                label.style.display = 'block';
+                loader.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+
