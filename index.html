@@ -3,191 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parvassive Playz | Secure Hub</title>
+    <title>Parvassive Playz | Join the Squad</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
         :root {
             --neon-cyan: #00f3ff;
             --neon-purple: #bc13fe;
-            --dark-bg: #0a0a0c;
+            --dark-bg: #050505;
         }
 
         body {
-            background-color: #f3f4f6;
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
             margin: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- BACKGROUND STYLING --- */
+        .bg-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, rgba(0, 243, 255, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        /* --- LOGO CIRCLE (Matches Reference) --- */
+        .logo-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .logo-glow-ring {
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+            filter: blur(15px);
+            opacity: 0.6;
+            animation: pulse 3s infinite alternate;
+        }
+
+        .logo-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #111;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* --- BUTTON STYLES --- */
+        .btn-join {
+            background: linear-gradient(to right, #bc13fe, #00f3ff);
+            color: #000;
+            font-weight: 900;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .btn-join:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.6);
+        }
+
+        /* --- AUTH MODAL (Matches Ref Image 2) --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.5s ease;
+            z-index: 100;
+            padding: 20px;
         }
 
         .auth-card {
             background: white;
+            color: black;
             width: 100%;
             max-width: 400px;
-            padding: 40px 32px;
-            text-align: center;
+            padding: 40px 30px;
             border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            text-align: center;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .btn-google {
             background: white;
-            color: #000;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
+            color: #333;
+            border: 1px solid #ddd;
             width: 100%;
             padding: 14px;
+            border-radius: 12px;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            font-size: 16px;
+            margin-bottom: 20px;
         }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            color: #9ca3af;
-            margin: 24px 0;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #f3f4f6; }
-        .divider:not(:empty)::before { margin-right: 12px; }
-        .divider:not(:empty)::after { margin-left: 12px; }
-
-        .input-group {
-            background: #f3f4f6;
+        .input-box {
+            background: #f1f1f1;
             border-radius: 12px;
             padding: 12px 16px;
             text-align: left;
             margin-bottom: 12px;
-            border: 2px solid transparent;
         }
-        .input-group:focus-within { border-color: var(--neon-cyan); background: white; }
 
-        .input-group label {
+        .input-box label {
             display: block;
-            color: #6b7280;
+            color: #777;
             font-size: 10px;
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 2px;
+            letter-spacing: 1px;
         }
-        .input-group input {
+
+        .input-box input {
             background: transparent;
             border: none;
             width: 100%;
             outline: none;
-            font-size: 15px;
+            font-size: 16px;
             color: #000;
         }
 
-        .btn-main {
+        .btn-black {
             background: #000;
             color: #fff;
             width: 100%;
             padding: 16px;
             border-radius: 50px;
             font-weight: 700;
+            font-size: 16px;
             margin-top: 10px;
         }
 
-        #dashboard {
-            background: var(--dark-bg);
-            color: white;
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid var(--neon-cyan);
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-        }
-
         .hidden { display: none !important; }
-        
+
+        /* Loader */
         #loader {
             position: fixed;
             inset: 0;
-            background: #0a0a0c;
-            z-index: 100;
+            background: #000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-    <!-- Professional Loader -->
+    <div class="bg-glow"></div>
+
+    <!-- INITIAL LOADING GRID -->
     <div id="loader">
-        <div class="w-10 h-10 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-4"></div>
-        <p class="text-cyan-400 font-mono text-[10px] tracking-[0.3em]">SYNCHRONIZING BACKBONE</p>
+        <div class="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-4"></div>
+        <p class="text-cyan-400 font-mono text-xs tracking-[0.3em]">SYNCHRONIZING HUB...</p>
     </div>
 
-    <!-- Auth UI -->
-    <div id="auth-ui" class="auth-card hidden">
-        <div class="mb-8">
-            <h1 class="text-2xl font-black italic text-black uppercase tracking-tighter">
-                PARVASSIVE<span class="text-cyan-500">PLAYZ</span>
-            </h1>
-            <p id="auth-subtitle" class="text-gray-400 text-[11px] mt-1 font-bold uppercase tracking-widest">Entry Protocol Required</p>
+    <!-- LANDING PAGE CONTENT -->
+    <main id="landing-content" class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        
+        <!-- Logo Section -->
+        <div class="logo-container mb-12">
+            <div class="logo-glow-ring"></div>
+            <img src="logo.jpg" alt="Parvassive Playz Logo" class="logo-img" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=fallback'">
         </div>
 
-        <button id="google-btn" class="btn-google">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/pwa_google_spaces_64dp.png" width="18">
-            Continue with Google
-        </button>
-
-        <div class="divider">OR USE BACKBONE</div>
-
-        <form id="auth-form">
-            <div id="name-field-container" class="input-group hidden">
-                <label>GAMER NAME</label>
-                <input type="text" id="reg-name" placeholder="Enter Nickname">
-            </div>
-            <div class="input-group">
-                <label>EMAIL ADDRESS</label>
-                <input type="email" id="auth-email" required placeholder="commander@playz.com">
-            </div>
-            <div class="input-group">
-                <label>PASSWORD</label>
-                <input type="password" id="auth-pass" required placeholder="••••••••">
-            </div>
-            <button type="submit" id="submit-btn" class="btn-main">CONTINUE</button>
-        </form>
+        <!-- Text Section -->
+        <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter mb-4">
+            PARVASSIVE <span class="text-cyan-400">PLAYZ</span>
+        </h1>
         
-        <p class="mt-8 text-gray-400 text-xs font-medium">
-            <span id="toggle-msg">New to the squad?</span>
-            <span id="toggle-btn" class="text-cyan-600 font-bold cursor-pointer ml-1 underline">Sign Up</span>
+        <p class="text-gray-400 max-w-xs mx-auto text-sm leading-relaxed mb-12">
+            High-octane gameplay, epic fails, and community vibes. <br>
+            <span class="text-purple-400 font-bold mt-2 inline-block">NOT A GAMER, BUT A GAME CHANGER.</span>
         </p>
+
+        <!-- Main Buttons -->
+        <div class="w-full max-w-sm space-y-6">
+            <button onclick="openModal('signup-modal')" class="btn-join w-full py-4 rounded-xl text-lg uppercase">
+                JOIN SQUAD
+            </button>
+
+            <button onclick="openModal('login-modal')" class="text-gray-500 hover:text-white font-bold tracking-widest text-xs uppercase underline decoration-cyan-400 underline-offset-8">
+                ALREADY A MEMBER? LOGIN
+            </button>
+
+            <div class="pt-8">
+                <a href="https://youtube.com/@parvassiveplayz26?si=XCHfSm_ch-34Oxid" target="_blank" class="text-[10px] border border-gray-800 px-6 py-2 rounded-full text-gray-500 hover:border-cyan-400 hover:text-cyan-400 transition-all uppercase tracking-[0.2em]">
+                    SUBSCRIBE NOW
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- SIGN UP MODAL (Matches Ref Image 2) -->
+    <div id="signup-modal" class="modal-overlay hidden">
+        <div class="auth-card">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400">&times;</button>
+            <button onclick="handleGoogleSignIn()" class="btn-google">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/pwa_google_spaces_64dp.png" width="18">
+                Continue with Google
+            </button>
+            <div class="text-gray-400 text-sm mb-4">or</div>
+            <form id="signup-form">
+                <div class="input-box">
+                    <label>GAMER NAME</label>
+                    <input type="text" id="reg-name" required placeholder="NICKNAME">
+                </div>
+                <div class="input-box">
+                    <label>EMAIL</label>
+                    <input type="email" id="reg-email" required placeholder="EMAIL@DOMAIN.COM">
+                </div>
+                <div class="input-box">
+                    <label>PASSWORD</label>
+                    <input type="password" id="reg-pass" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-black">Create Account</button>
+            </form>
+            <p class="mt-4 text-xs text-gray-400">Back to <span class="text-blue-600 cursor-pointer" onclick="switchModal('signup-modal', 'login-modal')">Login</span></p>
+        </div>
     </div>
 
-    <!-- Dashboard -->
-    <div id="dashboard" class="hidden">
-        <div class="relative inline-block mb-6">
-            <img id="u-img" src="" class="w-24 h-24 rounded-full border-2 border-cyan-400 p-1 shadow-[0_0_20px_rgba(0,243,255,0.4)]">
-            <div class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-4 border-black rounded-full"></div>
+    <!-- LOGIN MODAL (Matches Ref Image 2 Context) -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="auth-card">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400">&times;</button>
+            <button onclick="handleGoogleSignIn()" class="btn-google">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/pwa_google_spaces_64dp.png" width="18">
+                Continue with Google
+            </button>
+            <div class="text-gray-400 text-sm mb-4">or</div>
+            <form id="login-form">
+                <div class="input-box">
+                    <label>EMAIL</label>
+                    <input type="email" id="login-email" required placeholder="EMAIL@DOMAIN.COM">
+                </div>
+                <div class="input-box">
+                    <label>PASSWORD</label>
+                    <input type="password" id="login-pass" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-black">Continue with email</button>
+            </form>
+            <p class="mt-4 text-xs text-gray-400">New player? <span class="text-blue-600 cursor-pointer" onclick="switchModal('login-modal', 'signup-modal')">Sign Up</span></p>
         </div>
-        <h2 class="text-3xl font-black italic tracking-tighter uppercase" id="u-name">PLAYER</h2>
-        <p id="u-email" class="text-cyan-400 font-mono text-[10px] mb-8 opacity-60 tracking-wider"></p>
-        
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 mb-8 text-left">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-gray-500 text-[9px] font-black uppercase tracking-widest">Auth Method</span>
-                <span id="auth-method-label" class="text-[9px] bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded font-bold">--</span>
-            </div>
-            <p class="text-[13px] text-gray-400 leading-relaxed">Account verified. Access to the Parvassive Playz gamer hub is now active.</p>
-        </div>
-
-        <button onclick="handleLogout()" class="w-full py-4 text-red-500 font-bold text-[10px] tracking-[0.2em] border border-red-500/20 hover:bg-red-500/5 rounded-xl transition-all uppercase">
-            Terminate Session
-        </button>
     </div>
 
     <script type="module">
@@ -197,9 +286,9 @@
             onAuthStateChanged, signOut, signInWithEmailAndPassword, 
             createUserWithEmailAndPassword, updateProfile 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Using your verified keys from project: parvassive-squad-deb49
+        // Your verified keys
         const firebaseConfig = {
             apiKey: "AIzaSyCpH9pjBZDgSFKXzVnddIUgtYzswWggijw",
             authDomain: "parvassive-squad-deb49.firebaseapp.com",
@@ -212,97 +301,91 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const provider = new GoogleAuthProvider();
+        const googleProvider = new GoogleAuthProvider();
 
-        const loader = document.getElementById('loader');
-        const authUi = document.getElementById('auth-ui');
-        const dashUi = document.getElementById('dashboard');
-
-        let isSignUp = false;
-
-        // UI Toggle (Login vs Sign Up)
-        document.getElementById('toggle-btn').onclick = () => {
-            isSignUp = !isSignUp;
-            document.getElementById('name-field-container').classList.toggle('hidden');
-            document.getElementById('submit-btn').innerText = isSignUp ? "CREATE HUB ACCOUNT" : "CONTINUE";
-            document.getElementById('toggle-msg').innerText = isSignUp ? "Already a squad member?" : "New to the squad?";
-            document.getElementById('toggle-btn').innerText = isSignUp ? "Log In" : "Sign Up";
-            document.getElementById('auth-subtitle').innerText = isSignUp ? "Initialize Profile" : "Entry Protocol Required";
+        // UI Functions
+        window.openModal = (id) => document.getElementById(id).classList.remove('hidden');
+        window.closeModal = () => {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
+        };
+        window.switchModal = (oldId, newId) => {
+            document.getElementById(oldId).classList.add('hidden');
+            document.getElementById(newId).classList.remove('hidden');
         };
 
-        // Google Authentication
-        document.getElementById('google-btn').onclick = () => {
-            loader.classList.remove('hidden');
-            signInWithRedirect(auth, provider);
+        // --- AUTHENTICATION LOGIC ---
+
+        // Google Redirect
+        window.handleGoogleSignIn = () => {
+            document.getElementById('loader').classList.remove('hidden');
+            signInWithRedirect(auth, googleProvider);
         };
 
-        // Email Authentication (The Backbone)
-        document.getElementById('auth-form').onsubmit = async (e) => {
+        // Email Sign Up
+        document.getElementById('signup-form').onsubmit = async (e) => {
             e.preventDefault();
-            loader.classList.remove('hidden');
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-pass').value;
+            document.getElementById('loader').classList.remove('hidden');
             const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
 
             try {
-                if (isSignUp) {
-                    const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await updateProfile(res.user, { displayName: name });
-                    await syncUser(res.user, "EMAIL");
-                } else {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                }
+                const res = await createUserWithEmailAndPassword(auth, email, pass);
+                await updateProfile(res.user, { displayName: name });
+                await saveUserToDB(res.user);
+                window.location.href = "dashboard.html";
             } catch (err) {
-                alert("ACCESS DENIED: " + err.message);
-                loader.classList.add('hidden');
+                alert(err.message);
+                document.getElementById('loader').classList.add('hidden');
             }
         };
 
-        // Firestore User Sync
-        async function syncUser(user, method) {
-            const userRef = doc(db, "users", user.uid);
-            const snap = await getDoc(userRef);
-            if (!snap.exists()) {
-                await setDoc(userRef, {
-                    uid: user.uid,
-                    displayName: user.displayName || "Gamer",
-                    email: user.email,
-                    photoURL: user.photoURL || "",
-                    authMethod: method,
-                    timestamp: new Date()
-                });
+        // Email Login
+        document.getElementById('login-form').onsubmit = async (e) => {
+            e.preventDefault();
+            document.getElementById('loader').classList.remove('hidden');
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                window.location.href = "dashboard.html";
+            } catch (err) {
+                alert(err.message);
+                document.getElementById('loader').classList.add('hidden');
             }
+        };
+
+        // Firestore Sync
+        async function saveUserToDB(user) {
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                name: user.displayName || "Gamer",
+                email: user.email,
+                joined: new Date()
+            }, { merge: true });
         }
 
-        // Global Auth State Listener
+        // Auth State Listener
         onAuthStateChanged(auth, async (user) => {
+            document.getElementById('loader').classList.add('hidden');
             if (user) {
-                const method = user.providerData[0]?.providerId === 'google.com' ? 'GOOGLE' : 'EMAIL';
-                await syncUser(user, method);
-                
-                document.getElementById('u-name').innerText = user.displayName || "COMMANDER";
-                document.getElementById('u-email').innerText = user.email.toUpperCase();
-                document.getElementById('u-img').src = user.photoURL || `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${user.uid}`;
-                document.getElementById('auth-method-label').innerText = method;
-                
-                authUi.classList.add('hidden');
-                dashUi.classList.remove('hidden');
-                document.body.style.backgroundColor = "#0a0a0c";
-            } else {
-                authUi.classList.remove('hidden');
-                dashUi.classList.add('hidden');
-                document.body.style.backgroundColor = "#f3f4f6";
+                // If user is already logged in, take them to dashboard
+                // Uncomment the line below when you are ready to auto-redirect
+                // window.location.href = "dashboard.html";
             }
-            loader.classList.add('hidden');
         });
 
-        window.handleLogout = () => {
-            loader.classList.remove('hidden');
-            signOut(auth);
+        // Initialize check
+        window.onload = () => {
+            getRedirectResult(auth).then((result) => {
+                if (result) {
+                    saveUserToDB(result.user).then(() => {
+                        window.location.href = "dashboard.html";
+                    });
+                }
+            }).catch(e => console.error(e));
         };
-
-        // Handle return from Google
-        window.onload = () => getRedirectResult(auth).catch(e => console.error("Redirect Error:", e));
     </script>
 </body>
 </html>
