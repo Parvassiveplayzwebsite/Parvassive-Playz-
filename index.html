@@ -3,233 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parvassive Playz - Join the Squad</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Parvassive Playz | Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'orbitron': ['"Orbitron"', 'sans-serif'],
-                        'rajdhani': ['"Rajdhani"', 'sans-serif'],
-                    },
-                    colors: {
-                        'neon-blue': '#00f3ff',
-                        'neon-purple': '#bc13fe',
-                        'dark-bg': '#050505',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #050505;
-            font-family: 'Orbitron', sans-serif;
-            overflow-x: hidden;
-            color: white;
+            background-color: #f8f9fa; /* Light background to match Image 2 context */
             margin: 0;
-            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Floating Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .float-logo { animation: float 4s ease-in-out infinite; }
-        .float-text { animation: float 5s ease-in-out infinite; }
-
-        .btn-gradient {
-            background: linear-gradient(90deg, #bc13fe 0%, #00f3ff 100%);
-            transition: all 0.3s ease;
+        /* THE WHITE CARD FROM YOUR IMAGE 2 */
+        .auth-container {
+            background: white;
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 24px;
+            text-align: center;
         }
 
-        .modal {
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
+        /* Exact Google Button Style from Image 2 */
+        .btn-google {
+            background: white;
+            color: #000;
+            border: 2px dashed #000; /* Matching the dashed border in your reference */
+            border-radius: 12px;
+            width: 100%;
+            padding: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
         }
 
-        .input-field {
-            background-color: #f0f2f5;
-            color: #1a1a1a;
-            font-family: 'Rajdhani', sans-serif;
+        .divider {
+            color: #666;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        /* Email Input Style from Image 2 */
+        .input-box {
+            background: #ededed;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-box label {
+            display: block;
+            color: #000;
+            font-size: 12px;
             font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .input-box input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
         }
 
-        .logo-ring {
-            position: relative;
-            padding: 3px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00f3ff, #bc13fe);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
+        /* The Black Button from Image 2 */
+        .btn-black {
+            background: #000;
+            color: #fff;
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
         }
 
-        .loader {
-            border: 3px solid rgba(255,255,255,0.2);
+        /* Loading Screen Fix */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: #00f3ff;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 243, 255, 0.1);
+            border-top: 4px solid #00f3ff;
             border-radius: 50%;
-            border-top: 3px solid #00f3ff;
-            width: 18px;
-            height: 18px;
             animation: spin 1s linear infinite;
-            display: none;
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hidden { display: none !important; }
+        
+        /* Cyberpunk Dashboard (Visible after login) */
+        #dashboard {
+            background: #000;
+            color: #00f3ff;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #00f3ff;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-between py-8 px-4">
+<body>
 
-    <!-- Header -->
-    <div class="text-center">
-        <h3 class="tracking-[0.3em] text-[10px] md:text-xs font-bold opacity-60 uppercase">
-            PARVASSIVE <span class="text-neon-blue">PLAYZ</span>
-        </h3>
+    <!-- STUCK SCREEN FIX: This will be hidden by script -->
+    <div id="loader">
+        <div class="spinner mb-4"></div>
+        <p style="letter-spacing: 2px; font-size: 12px;">LOADING GRID...</p>
     </div>
 
-    <!-- Main -->
-    <main class="flex flex-col items-center justify-center w-full max-w-xs text-center">
+    <!-- UI From Image 2 -->
+    <div id="login-ui" class="auth-container hidden">
+        <button id="google-btn" class="btn-google">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/pwa_google_spaces_64dp.png" width="20" alt="G">
+            Continue with Google
+        </button>
+
+        <div class="divider">or</div>
+
+        <form id="auth-form">
+            <div class="input-box">
+                <label>EMAIL</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="input-box" id="pass-box">
+                <label>PASSWORD</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn-black" id="submit-btn">Continue with email</button>
+        </form>
         
-        <div class="mb-6 float-logo">
-            <div class="logo-ring">
-                <div class="rounded-full bg-black overflow-hidden h-32 w-32 flex items-center justify-center">
-                    <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/000000/00f3ff?text=LOGO'">
-                </div>
-            </div>
-        </div>
-
-        <div class="float-text">
-            <h1 class="text-2xl font-black tracking-tight mb-0 uppercase">Parvassive</h1>
-            <h1 class="text-2xl font-black tracking-tight text-neon-blue drop-shadow-[0_0_8px_rgba(0, 243, 255, 0.6)] uppercase">Playz</h1>
-        </div>
-
-        <div class="mt-4 mb-8">
-            <p class="font-rajdhani text-gray-400 text-sm leading-snug">High-octane gameplay, epic fails,<br>and community vibes.</p>
-            <p class="font-rajdhani text-neon-purple font-bold text-[10px] tracking-[0.2em] uppercase mt-2">Not a Gamer, But a Game Changer.</p>
-        </div>
-
-        <div class="w-full space-y-4">
-            <button onclick="openModal('signup-modal')" class="w-full py-4 text-white font-black text-sm tracking-widest btn-gradient rounded-md uppercase shadow-lg">
-                JOIN SQUAD
-            </button>
-            <div class="pt-2">
-                <button onclick="openModal('login-modal')" class="text-gray-500 text-[10px] font-bold underline hover:text-white transition uppercase tracking-[0.1em]">
-                    Already Member? Login
-                </button>
-            </div>
-        </div>
-    </main>
-
-    <!-- SIGN UP MODAL -->
-    <div id="signup-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
-        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative text-center">
-            <button onclick="closeModal('signup-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
-            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white font-orbitron">Create Account</h2>
-            
-            <form id="signup-form" class="space-y-4 text-left">
-                <input type="email" id="su-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
-                <input type="password" id="su-pass" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
-                <div id="su-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
-                <button type="submit" class="w-full py-3.5 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 uppercase tracking-widest">
-                    <span id="su-btn-label">SIGN UP</span>
-                    <div id="su-loader" class="loader"></div>
-                </button>
-            </form>
-        </div>
+        <p class="mt-6 text-gray-500 text-sm">
+            Need an account? <span id="toggle-auth" class="text-blue-600 font-bold cursor-pointer">Sign Up</span>
+        </p>
     </div>
 
-    <!-- LOGIN MODAL -->
-    <div id="login-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-6">
-        <div class="bg-[#0f0f0f] border border-white/5 w-full max-w-[300px] p-6 rounded-xl relative text-center">
-            <button onclick="closeModal('login-modal')" class="absolute top-3 right-4 text-gray-400 text-xl">&times;</button>
-            <h2 class="text-lg font-bold mb-6 tracking-widest uppercase text-white font-orbitron">Welcome Back</h2>
-            
-            <form id="login-form" class="space-y-4 text-left">
-                <input type="email" id="li-email" placeholder="Email" class="w-full p-3 rounded input-field outline-none" required>
-                <input type="password" id="li-pass" placeholder="Password" class="w-full p-3 rounded input-field outline-none" required>
-                <div id="li-msg" class="hidden text-[10px] font-bold p-2 rounded text-center break-words"></div>
-                <button type="submit" class="w-full py-3.5 mt-2 text-white font-bold text-xs btn-gradient rounded flex items-center justify-center gap-2 uppercase tracking-widest">
-                    <span id="li-btn-label">LOGIN</span>
-                    <div id="li-loader" class="loader"></div>
-                </button>
-            </form>
-        </div>
+    <!-- Post-Login Dashboard -->
+    <div id="dashboard" class="hidden">
+        <img id="u-img" src="" class="w-20 h-20 rounded-full mx-auto border-2 border-cyan-400 mb-4">
+        <h2 class="text-xl font-bold" id="u-name">COMMANDER</h2>
+        <p id="u-email" class="text-sm opacity-70 mb-6"></p>
+        <button onclick="logout()" class="text-red-500 font-bold text-xs tracking-widest border border-red-500 px-4 py-2 rounded">LOGOUT</button>
     </div>
 
-    <!-- Firebase System -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithRedirect, 
+            getRedirectResult, 
+            GoogleAuthProvider, 
+            onAuthStateChanged, 
+            signOut,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // KEYS FROM SCREENSHOT AIzaSyCzWkhYu0VndJuREUJQTbtt4kLP5rqC3Ms
+        // Verified keys from your screenshot
         const firebaseConfig = {
-            apiKey: "AIzaSyCzWkhYu0VndJuREUJQTbtt4kLP5rqC3Ms",
-            authDomain: "parvassive-playz-bb435.firebaseapp.com",
-            projectId: "parvassive-playz-bb435",
-            storageBucket: "parvassive-playz-bb435.firebasestorage.app",
-            messagingSenderId: "408666352798",
-            appId: "1:408666352798:web:28d96786816e6bf52b9f8f"
+            apiKey: "AIzaSyCpH9pjBZDgSFKXzVnddIUgtYzswWggijw",
+            authDomain: "parvassive-squad-deb49.firebaseapp.com",
+            projectId: "parvassive-squad-deb49",
+            storageBucket: "parvassive-squad-deb49.firebasestorage.app",
+            messagingSenderId: "66622523570",
+            appId: "1:66622523570:web:c5990de0eab030a9961ab"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
+        const loader = document.getElementById('loader');
+        const loginUi = document.getElementById('login-ui');
+        const dashUi = document.getElementById('dashboard');
+
+        let isSignUp = false;
+
+        // Force hide loader after 5 seconds if Firebase hangs
+        setTimeout(() => {
+            if(!loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+                loginUi.classList.remove('hidden');
+                console.warn("Firebase took too long. Check your domain whitelisting.");
+            }
+        }, 5000);
+
+        // Google Login
+        document.getElementById('google-btn').onclick = () => {
+            loader.classList.remove('hidden');
+            signInWithRedirect(auth, provider);
+        };
+
+        // Email Auth
+        document.getElementById('auth-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            try {
+                if(isSignUp) {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                }
+            } catch (err) {
+                alert("Error: " + err.message);
+            }
+        };
+
+        // Toggle UI
+        document.getElementById('toggle-auth').onclick = () => {
+            isSignUp = !isSignUp;
+            document.getElementById('submit-btn').innerText = isSignUp ? "Create Account" : "Continue with email";
+            document.getElementById('toggle-auth').innerText = isSignUp ? "Login instead" : "Sign Up";
+        };
+
+        // Handle Redirect (When coming back from Google)
+        window.onload = async () => {
+            try {
+                const result = await getRedirectResult(auth);
+                if (result) console.log("User logged in");
+            } catch (error) {
+                // If it fails here, it's likely a "Domain Not Authorized" error
+                if(error.code === "auth/unauthorized-domain") {
+                    alert("CRITICAL ERROR: This website domain is not allowed in Firebase. Add your current URL to 'Authorized Domains' in Firebase Settings.");
+                } else {
+                    alert("Auth Error: " + error.message);
+                }
+                loader.classList.add('hidden');
+                loginUi.classList.remove('hidden');
+            }
+        };
+
+        // Auth State Listener
         onAuthStateChanged(auth, (user) => {
-            if (user) { window.location.href = 'dashboard.html'; }
+            loader.classList.add('hidden');
+            if (user) {
+                loginUi.classList.add('hidden');
+                dashUi.classList.remove('hidden');
+                document.getElementById('u-name').innerText = user.displayName || "PARVASSIVE GAMER";
+                document.getElementById('u-email').innerText = user.email;
+                document.getElementById('u-img').src = user.photoURL || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${user.uid}`;
+            } else {
+                loginUi.classList.remove('hidden');
+                dashUi.classList.add('hidden');
+            }
         });
 
-        window.openModal = (id) => document.getElementById(id).classList.add('active');
-        window.closeModal = (id) => {
-            document.getElementById(id).classList.remove('active');
-            document.querySelectorAll('[id$="-msg"]').forEach(el => el.classList.add('hidden'));
-        };
-
-        async function handleAuth(type, email, password) {
-            const msgBox = document.getElementById(type === 'signup' ? 'su-msg' : 'li-msg');
-            const label = document.getElementById(type === 'signup' ? 'su-btn-label' : 'li-btn-label');
-            const loader = document.getElementById(type === 'signup' ? 'su-loader' : 'li-loader');
-            
-            msgBox.classList.add('hidden');
-            label.style.display = 'none';
-            loader.style.display = 'block';
-
-            try {
-                if (type === 'signup') await createUserWithEmailAndPassword(auth, email, password);
-                else await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                console.error("DEBUG:", error.code, error.message);
-                msgBox.textContent = "Error: " + error.code.replace('auth/', '');
-                msgBox.className = "text-red-500 bg-red-500/10 border border-red-500/20 p-2 rounded text-[10px] font-bold mt-2 block";
-                label.style.display = 'block';
-                loader.style.display = 'none';
-                
-                if (error.code === 'auth/api-key-not-valid') {
-                    alert("STILL INVALID: You MUST enable the 'Secure Token Service API' in the Google Cloud Library for project bb435.");
-                }
-            }
-        }
-
-        document.getElementById('signup-form').onsubmit = (e) => { 
-            e.preventDefault(); 
-            handleAuth('signup', document.getElementById('su-email').value, document.getElementById('su-pass').value); 
-        };
-        document.getElementById('login-form').onsubmit = (e) => { 
-            e.preventDefault(); 
-            handleAuth('login', document.getElementById('li-email').value, document.getElementById('li-pass').value); 
-        };
+        window.logout = () => signOut(auth);
     </script>
 </body>
 </html>
