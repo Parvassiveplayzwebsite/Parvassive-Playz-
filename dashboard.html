@@ -2,49 +2,334 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parvassive Dashboard - Access Granted</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Parvassive Playz Dashboard</title>
+    <!-- Gamer Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background: #050505; color: #00f3ff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
-        .card { border: 2px solid #00f3ff; padding: 30px; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); max-width: 300px; }
-        button { background: linear-gradient(90deg, #bc13fe, #00f3ff); border: none; padding: 12px 20px; color: white; font-weight: bold; cursor: pointer; margin-top: 20px; border-radius: 8px; width: 100%; }
+        /* --- BRAND THEME --- */
+        :root {
+            --cyan: #00f3ff;
+            --purple: #bc13fe;
+            --dark-bg: #05070a;
+            --dark-card: #111625;
+            --online: #2ecc71;
+            --offline: #ff4757;
+            --bg: var(--dark-bg);
+            --card: var(--dark-card);
+            --text: #ffffff;
+            --muted: #a0a0a0;
+            --nav: #0a0e17;
+        }
+
+        body.light-mode {
+            --bg: #f0f2f5;
+            --card: #ffffff;
+            --text: #1a1a1a;
+            --muted: #555555;
+            --nav: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            height: 70px; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; background: var(--nav); border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            position: fixed; top: 0; width: 100%; z-index: 100;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+            background: linear-gradient(to right, var(--cyan), var(--purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
+        }
+
+        #theme-btn {
+            width: 44px; height: 44px; border-radius: 50%; border: none;
+            background: rgba(128, 128, 128, 0.1); display: flex; align-items: center; justify-content: center;
+        }
+
+        #theme-btn svg { width: 24px; height: 24px; fill: var(--text); }
+        .swirl { animation: swirlAnim 0.6s ease-in-out; }
+        @keyframes swirlAnim {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(0.4); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* --- MAIN CONTENT --- */
+        main { padding: 90px 20px 100px 20px; height: 100%; overflow-y: auto; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .card {
+            background: var(--card); border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            border: 1px solid rgba(0, 243, 255, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 { font-family: 'Orbitron', sans-serif; color: var(--cyan); font-size: 1.1rem; margin-bottom: 10px; text-transform: uppercase; }
+        
+        .btn {
+            display: block; width: 100%; padding: 15px; border: none; border-radius: 12px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            color: white; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 0.8rem;
+            margin-top: 15px; text-align: center; text-decoration: none; cursor: pointer;
+        }
+
+        /* --- COMMS --- */
+        .mode-switch { display: flex; gap: 10px; margin-bottom: 20px; }
+        .m-btn {
+            flex: 1; padding: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text); border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.65rem;
+        }
+        .m-btn.active { background: var(--cyan); color: #000; border-color: var(--cyan); font-weight: bold; }
+
+        .trans-header { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 15px; }
+        .trans-box { width: 100%; height: 140px; background: rgba(16, 20, 30, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; color: #fff; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-size: 1rem; }
+        .trans-btn { 
+            width: 100%; padding: 16px; background: var(--cyan); border: none; color: #000; 
+            font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 1rem;
+            clip-path: polygon(0 0, 100% 0, 100% 75%, 95% 100%, 0 100%); 
+        }
+        #sent-notif { color: var(--online); text-align: center; margin-top: 15px; font-family: 'Orbitron', sans-serif; font-weight: bold; display: none; }
+
+        /* --- ACCOUNT --- */
+        .profile-pic { width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--cyan); object-fit: cover; margin: 0 auto 10px; display: block; background: #222; }
+        .status-txt { text-align: center; font-family: 'Orbitron'; font-weight: bold; font-size: 0.8rem; margin-bottom: 20px; }
+        .avatar-list { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
+        .av-opt { width: 60px; height: 60px; border-radius: 50%; border: 2px solid transparent; flex-shrink: 0; }
+        .av-opt.active { border-color: var(--cyan); }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            position: fixed; bottom: 0; width: 100%; height: 75px; background: var(--nav);
+            border-top: 1px solid rgba(0, 243, 255, 0.2); display: flex; justify-content: space-around;
+            align-items: center; z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; color: var(--muted);
+            font-size: 0.7rem; font-weight: bold; background: none; border: none; width: 25%;
+        }
+
+        .nav-item svg { width: 24px; height: 24px; fill: currentColor; margin-bottom: 4px; }
+        .nav-item.active { color: var(--cyan); }
+
+        #confirm-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1000; display:none; flex-direction:column; align-items:center; justify-content:center; padding:20px; }
+        #confirm-img { width: 200px; height: 200px; border-radius: 50%; border: 4px solid white; margin-bottom: 20px; object-fit: cover; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>SQUAD ACCESS GRANTED!</h1>
-        <p id="user-display" style="color: #bc13fe; font-weight: bold;">Verifying...</p>
-        <button onclick="logout()">LOGOUT</button>
+
+    <header>
+        <div class="logo-text">PARVASSIVE</div>
+        <button id="theme-btn" onclick="toggleTheme()"><svg id="icon-svg" viewBox="0 0 24 24"></svg></button>
+    </header>
+
+    <!-- CONFIRMATION OVERLAY -->
+    <div id="confirm-overlay">
+        <h2 style="color:white; margin-bottom:20px; font-family:'Orbitron'; text-align:center;">DO YOU WANT TO SET THIS?</h2>
+        <img id="confirm-img" src="">
+        <div style="display:flex; gap:20px; width:100%;">
+            <button class="btn" style="background:var(--online); flex:1;" onclick="saveCustom()">YES</button>
+            <button class="btn" style="background:var(--offline); flex:1;" onclick="closeOverlay()">NO</button>
+        </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    <main>
+        <!-- HOME -->
+        <section id="home-sec" class="section active">
+            <div class="card">
+                <h2>Channel Overview</h2>
+                <p>Welcome back, <span id="h-name">Parvassive Playz</span>!</p>
+                <div style="display: flex; gap: 10px; margin-top:15px;">
+                    <div style="flex:1; text-align:center; padding:15px; background:rgba(0,0,0,0.2); border-radius:10px;">
+                        <div style="color:var(--cyan); font-weight:bold; font-size:1.1rem;">12.4K</div>
+                        <div style="font-size:0.7rem;">SUBS</div>
+                    </div>
+                    <div style="flex:1; text-align:center; padding:15px; background:rgba(0,0,0,0.2); border-radius:10px;">
+                        <div id="h-status" style="color:var(--online); font-weight:bold; font-size:1.1rem;">ONLINE</div>
+                        <div style="font-size:0.7rem;">STATUS</div>
+                    </div>
+                </div>
+                <button class="btn" onclick="alert('Preparing stream engine...')">GO LIVE NOW</button>
+            </div>
+        </section>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDaZwZHOsUb8AnljcFvzkoZiHvWiUSfGtYXM",
-            authDomain: "parvassive-playz-6dfe4.firebaseapp.com",
-            projectId: "parvassive-playz-6dfe4",
-            storageBucket: "parvassive-playz-6dfe4.firebasestorage.app",
-            messagingSenderId: "796137786717",
-            appId: "1:796137786717:web:22e064e854fc97978becb4"
-        };
+        <!-- COMMS -->
+        <section id="comms-sec" class="section">
+            <div class="mode-switch">
+                <button class="m-btn active" id="p-tab" onclick="setMode('p')">GLOBAL CHAT</button>
+                <button class="m-btn" id="t-tab" onclick="setMode('t')">PRIVATE TRANSMIT</button>
+            </div>
+            <div id="p-box">
+                <div class="card">
+                    <h2>Squad Chat</h2>
+                    <div style="height: 250px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-style: italic; font-size: 0.9rem;">Real-time database connection pending...</div>
+                    <div style="display:flex; gap:10px;"><input type="text" style="flex:1; padding:12px; background:rgba(0,0,0,0.3); border:1px solid var(--cyan); border-radius:8px; color:white; outline:none;" placeholder="Type message..."><button class="btn" style="margin:0; width:auto; padding:0 15px;">SEND</button></div>
+                </div>
+            </div>
+            <div id="t-box" style="display:none;">
+                <h1 class="trans-header">COMMUNICATIONS</h1>
+                <div class="card">
+                    <h2 style="color:var(--cyan);">TRANSMIT MESSAGE</h2>
+                    <p style="margin-bottom:15px; font-size:0.9rem;">Send a personal message to Parvassive.</p>
+                    <textarea class="trans-box" id="t-area" placeholder="Enter transmission..."></textarea>
+                    <button class="trans-btn" id="t-btn" onclick="sendSilent()">SEND TRANSMISSION</button>
+                    <p id="sent-notif">RECEIVED.</p>
+                </div>
+            </div>
+        </section>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+        <!-- UPDATES -->
+        <section id="updates-sec" class="section">
+            <div class="card">
+                <h2>Patch Notes</h2>
+                <p>Version 1.2.5: Relocated Discord gateway for better accessibility.</p>
+                <a href="https://discord.gg/BA5s2Bq6rq" target="_blank" class="btn" style="background:#5865F2;">OPEN DISCORD</a>
+            </div>
+        </section>
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('user-display').textContent = user.email;
+        <!-- ACCOUNT -->
+        <section id="account-sec" class="section">
+            <img src="" id="a-img" class="profile-pic">
+            <h2 id="a-name" style="text-align:center; margin-bottom:5px;">Parvassive Playz</h2>
+            <div class="status-txt" id="a-status">•ONLINE</div>
+            <div class="card">
+                <h2>Edit Gamertag</h2>
+                <input type="text" id="a-in" oninput="changeTag(this.value)" style="width:100%; padding:12px; background:#000; border:1px solid var(--cyan); color:#fff; border-radius:8px; margin-bottom:15px; text-align:center; font-family:'Orbitron';" placeholder="New Tag...">
+                <h2>Choose Avatar</h2>
+                <div class="avatar-list" id="a-pick"></div>
+                <input type="file" id="f-pick" style="display:none;" accept="image/*" onchange="previewImg(event)">
+                <button class="btn" style="background:var(--purple);" onclick="document.getElementById('f-pick').click()">UPLOAD CUSTOM</button>
+            </div>
+        </section>
+    </main>
+
+    <nav>
+        <button class="nav-item active" onclick="goTab('home-sec', this)"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>HOME</span></button>
+        <button class="nav-item" onclick="goTab('comms-sec', this)"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg><span>COMMS</span></button>
+        <button class="nav-item" onclick="goTab('updates-sec', this)"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><span>UPDATES</span></button>
+        <button class="nav-item" onclick="goTab('account-sec', this)"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg><span>ACCOUNT</span></button>
+    </nav>
+
+    <script>
+        var sun = `<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>`;
+        var moon = `<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>`;
+        var dark = true;
+        document.getElementById('icon-svg').innerHTML = sun;
+
+        function toggleTheme() {
+            var b = document.getElementById('theme-btn');
+            b.classList.add('swirl');
+            setTimeout(function() {
+                document.body.classList.toggle('light-mode');
+                dark = !dark; document.getElementById('icon-svg').innerHTML = dark ? sun : moon;
+            }, 300);
+            setTimeout(function() { b.classList.remove('swirl'); }, 600);
+        }
+
+        function goTab(id, btn) {
+            var items = document.getElementsByClassName('nav-item');
+            for(var i=0; i<items.length; i++) { items[i].classList.remove('active'); }
+            btn.classList.add('active');
+            var sections = document.getElementsByClassName('section');
+            for(var j=0; j<sections.length; j++) { sections[j].classList.remove('active'); }
+            document.getElementById(id).classList.add('active');
+            document.getElementById('theme-btn').style.visibility = (id === 'account-sec') ? 'hidden' : 'visible';
+        }
+
+        function setMode(m) {
+            if(m === 'p') {
+                document.getElementById('p-tab').classList.add('active'); document.getElementById('t-tab').classList.remove('active');
+                document.getElementById('p-box').style.display='block'; document.getElementById('t-box').style.display='none';
             } else {
-                window.location.href = 'index.html';
+                document.getElementById('t-tab').classList.add('active'); document.getElementById('p-tab').classList.remove('active');
+                document.getElementById('t-box').style.display='block'; document.getElementById('p-box').style.display='none';
             }
-        });
+        }
 
-        window.logout = () => {
-            signOut(auth).then(() => {
-                window.location.href = 'index.html';
-            });
+        function sendSilent() {
+            var text = document.getElementById('t-area').value; if(!text) return;
+            var btn = document.getElementById('t-btn'); btn.textContent = "TRANSMITTING..."; btn.disabled = true;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://formsubmit.co/ajax/bantisarkar987@gmail.com", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4) {
+                    document.getElementById('sent-notif').style.display = 'block';
+                    document.getElementById('t-area').value = "";
+                    btn.textContent = "SEND TRANSMISSION"; btn.disabled = false;
+                    setTimeout(function() { document.getElementById('sent-notif').style.display='none'; }, 4000);
+                }
+            };
+            xhr.send(JSON.stringify({ name: document.getElementById('a-name').textContent, message: text }));
+        }
+
+        function changeTag(v) {
+            document.getElementById('a-name').textContent = v || "Player";
+            document.getElementById('h-name').textContent = v || "Player";
+            localStorage.setItem('g_tag', v);
+        }
+
+        function previewImg(e) {
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('confirm-img').src = ev.target.result;
+                document.getElementById('confirm-overlay').style.display = 'flex';
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        function saveCustom() {
+            var s = document.getElementById('confirm-img').src;
+            document.getElementById('a-img').src = s;
+            localStorage.setItem('g_img', s);
+            closeOverlay();
+        }
+
+        function closeOverlay() { document.getElementById('confirm-overlay').style.display = 'none'; }
+
+        window.onload = function() {
+            var n = localStorage.getItem('g_tag') || "Parvassive Playz";
+            var i = localStorage.getItem('g_img') || "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix";
+            document.getElementById('a-name').textContent = n; document.getElementById('h-name').textContent = n;
+            document.getElementById('a-img').src = i;
+            
+            var track = function() {
+                var on = navigator.onLine; var c = on ? "var(--online)" : "var(--offline)";
+                document.getElementById('a-status').textContent = on ? "•ONLINE" : "•OFFLINE";
+                document.getElementById('a-status').style.color = c;
+                document.getElementById('h-status').textContent = on ? "ONLINE" : "OFFLINE";
+                document.getElementById('h-status').style.color = c;
+            };
+            window.addEventListener('online', track); window.addEventListener('offline', track); track();
+
+            var pick = document.getElementById('a-pick');
+            var s = ["Felix", "Max", "Lilly", "Jack", "Zoe", "Simba", "Shadow", "Hunter", "Luna", "Star"];
+            for(var k=0; k<s.length; k++) {
+                var img = document.createElement('img');
+                img.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${s[k]}`;
+                img.className = "av-opt";
+                img.onclick = function() {
+                    document.getElementById('a-img').src = this.src;
+                    localStorage.setItem('g_img', this.src);
+                    var opts = document.getElementsByClassName('av-opt');
+                    for(var l=0; l<opts.length; l++) { opts[l].classList.remove('active'); }
+                    this.classList.add('active');
+                };
+                pick.appendChild(img);
+            }
         };
     </script>
 </body>
